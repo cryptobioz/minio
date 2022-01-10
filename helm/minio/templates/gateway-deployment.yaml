@@ -75,6 +75,9 @@ spec:
             {{- if eq .Values.gateway.type "gcs" }}
             - "/usr/bin/docker-entrypoint.sh minio gateway gcs {{ .Values.gateway.gcs.projectId }} -S {{ .Values.certsPath }} --address :{{ .Values.minioAPIPort }} --console-address :{{ .Values.minioConsolePort }} {{- template "minio.extraArgs" . }} "
             {{- end }}
+            {{- if eq .Values.gateway.type "azure" }}
+            - "/usr/bin/docker-entrypoint.sh minio gateway azure -S {{ .Values.certsPath }} --address :{{ .Values.minioAPIPort }} --console-address :{{ .Values.minioConsolePort }} {{- template "minio.extraArgs" . }} "
+            {{- end }}
           volumeMounts:
             - name: minio-user
               mountPath: "/tmp/credentials"
